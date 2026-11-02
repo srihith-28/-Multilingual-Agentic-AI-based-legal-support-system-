@@ -5,7 +5,8 @@
  * Handles error normalisation, timeout, and streaming (SSE) support.
  */
 
-const BASE_URL = '/api';
+const API_HOST = (import.meta.env.VITE_API_URL || '').trim().replace(/\/+$/, '');
+const BASE_URL = `${API_HOST}/api`;
 const REQUEST_TIMEOUT_MS = 300_000; // 5 minutes to accommodate multi-agent legal verification
 
 // ------------------------------------------------------------------------------

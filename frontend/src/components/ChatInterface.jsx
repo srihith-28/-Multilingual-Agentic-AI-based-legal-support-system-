@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Send, Volume2, User, Bot, Loader2, HelpCircle, ShieldAlert } from 'lucide-react';
 import VoiceRecorder from './VoiceRecorder';
+import { synthesizeSpeech } from '../utils/api';
 
 function detectScript(text) {
   if (!text) return 'en';
@@ -237,18 +238,7 @@ export default function ChatInterface({
 
       setPlayingAudioId(messageId);
 
-      const response = await fetch('/api/audio/synthesize', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          text: textToSpeak,
-          language: langToUse,
-        }),
-      });
-
-      if (!response.ok) throw new Error('Audio synthesis failed');
-
-      const blob     = await response.blob();
+      const blob     = await synthesizeSpeech(textToSpeak, langToUse);
       const audioUrl = URL.createObjectURL(blob);
 
       if (audioRef.current) {

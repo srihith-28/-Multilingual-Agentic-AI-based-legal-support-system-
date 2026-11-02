@@ -90,15 +90,26 @@ app = FastAPI(
 )
 
 # ------------------------------------------------------------------ #
-# CORS Middleware
+# CORS Middleware (Supports local dev, custom origins, and Vercel domains)
 # ------------------------------------------------------------------ #
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=settings.allowed_origins_list,
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+_origins = settings.allowed_origins_list
+if "*" in _origins:
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=["*"],
+        allow_credentials=False,
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
+else:
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=_origins,
+        allow_origin_regex=r"https://.*\.vercel\.app",
+        allow_credentials=True,
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
 
 # ------------------------------------------------------------------ #
 # Routers (Supporting both /api and /api/v1)
@@ -168,7 +179,7 @@ if __name__ == "__main__":
     uvicorn.run(
         "app.main:app",
         host=settings.app_host,
-        port=settings.effective_port,
+        port=settings.app_port,
         reload=settings.is_development,
         log_level=settings.log_level.lower(),
     )

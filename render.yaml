@@ -1,17 +1,27 @@
 services:
   - type: web
-    name: agent-forge-legal-ai
-    env: docker
-    dockerfilePath: ./Dockerfile
-    plan: free
-    region: oregon
+    name: agent-forge-backend
+    env: python
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
     envVars:
       - key: APP_ENV
         value: production
+      - key: APP_DEBUG
+        value: false
+      - key: LOG_LEVEL
+        value: INFO
       - key: GEMINI_API_KEY
         sync: false
+      - key: GEMINI_LLM_MODEL
+        value: gemini-2.0-flash
+      - key: GEMINI_EMBEDDING_MODEL
+        value: models/text-embedding-004
       - key: COHERE_API_KEY
         sync: false
+      - key: COHERE_RERANK_MODEL
+        value: rerank-multilingual-v3.0
       - key: QDRANT_URL
         sync: false
       - key: QDRANT_API_KEY

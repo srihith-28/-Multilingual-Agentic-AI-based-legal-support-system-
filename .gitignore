@@ -1,0 +1,63 @@
+# Agent Forge - Git Ignore
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# --- Virtual Environment ---
+.venv/
+venv/
+env/
+ENV/
+
+# --- Environment Variables (NEVER commit these!) ---
+.env
+*.env
+!.env.example
+
+# --- Qdrant local data ---
+qdrant_storage/
+
+# --- Audio temp files ---
+*.mp3
+*.wav
+*.webm
+*.ogg
+*.m4a
+
+# --- Logs ---
+*.log
+logs/
+
+# --- IDE ---
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# --- OS ---
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# --- Node (Frontend) ---
+node_modules/
+dist/
+.next/
+.nuxt/
+
+# --- Jupyter Notebooks ---
+.ipynb_checkpoints/
+
+# --- Test coverage ---
+.coverage
+htmlcov/
+.pytest_cache/

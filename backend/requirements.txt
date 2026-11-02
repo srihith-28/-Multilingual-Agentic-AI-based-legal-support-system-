@@ -1,0 +1,50 @@
+# ============================================================
+# Agent Forge - Multilingual Legal Support System
+# Backend Requirements
+# ============================================================
+
+# --- Web Framework ---
+fastapi==0.115.6
+uvicorn[standard]==0.32.1
+python-multipart==0.0.20         # For file uploads (audio)
+
+# --- LangGraph & LangChain Core ---
+langgraph>=1.2.0
+langchain-core>=1.4.0
+langchain-google-genai>=2.0.0    # Gemini LLM + Embeddings
+
+# --- Google Generative AI SDK ---
+google-genai>=1.0.0
+
+# --- Qdrant Vector Database ---
+qdrant-client[fastembed]>=1.12.0 # Includes dense + sparse hybrid search
+
+# --- Cohere Reranker ---
+cohere>=5.12.0
+
+# --- Speech Processing ---
+edge-tts>=7.0.0                  # Microsoft Neural TTS (zero cost)
+openai-whisper>=20240930         # Whisper ASR (local fallback)
+soundfile>=0.12.1
+pydub>=0.25.1
+
+# --- Language Detection ---
+langdetect>=1.0.9
+lingua-language-detector>=2.0.2  # Accurate for Indian scripts (Hindi, Kannada)
+
+# --- Data & Utilities ---
+pydantic>=2.7.0
+pydantic-settings>=2.6.0
+python-dotenv>=1.0.0
+httpx>=0.27.0
+aiofiles>=24.1.0
+tiktoken>=0.8.0
+
+# --- Legal Document Processing ---
+pypdf>=5.1.0                     # PDF parsing for government statutory PDFs
+python-docx>=1.1.2               # DOCX support
+beautifulsoup4>=4.12.3           # HTML scraping from government portals
+lxml>=5.3.0
+
+# --- Async & Performance ---
+anyio>=4.7.0

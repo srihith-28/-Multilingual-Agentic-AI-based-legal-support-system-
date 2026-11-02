@@ -78,8 +78,14 @@ class Settings(BaseSettings):
     app_env: Literal["development", "production"] = Field(default="development")
     app_host: str = Field(default="0.0.0.0")
     app_port: int = Field(default=8000)
+    port: Optional[int] = Field(default=None, alias="PORT")
     app_debug: bool = Field(default=True)
     log_level: str = Field(default="INFO")
+
+    @property
+    def effective_port(self) -> int:
+        """Returns PORT if set by PaaS (Render, Railway, Cloud Run), otherwise app_port."""
+        return self.port if self.port is not None else self.app_port
 
     # ------------------------------------------------------------------ #
     # LangGraph Checkpointing

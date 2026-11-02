@@ -28,3 +28,4 @@ services:
         sync: false
       - key: QDRANT_COLLECTION
         value: indian_family_law
+

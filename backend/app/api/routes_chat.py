@@ -200,7 +200,7 @@ async def chat_stream(request: ChatRequest):
 
         except Exception as e:
             logger.exception(f"[{session_id}] Streaming error: {e}")
-            error_event = json.dumps({"type": "error", "message": str(e)})
+            error_event = json.dumps({"type": "error", "message": f"{type(e).__name__}: {str(e)}"})
             yield f"data: {error_event}\n\n"
             yield "data: [DONE]\n\n"
 
@@ -256,8 +256,5 @@ async def chat(request: ChatRequest, background_tasks: BackgroundTasks):
         logger.exception(f"[{session_id}] Unhandled error in chat endpoint: {e}")
         raise HTTPException(
             status_code=500,
-            detail=(
-                "An unexpected error occurred while processing your legal query. "
-                "Please try again. If the issue persists, contact support."
-            ),
+            detail=f"Agent error ({type(e).__name__}): {str(e)}",
         )

@@ -6,7 +6,7 @@ Loads and validates all environment variables using Pydantic Settings.
 from pathlib import Path
 
 from pydantic_settings import BaseSettings, SettingsConfigDict
-from pydantic import Field
+from pydantic import Field, field_validator
 from functools import lru_cache
 from typing import Literal
 
@@ -40,6 +40,22 @@ class Settings(BaseSettings):
         default="gemini-embedding-001",
         description="Gemini multilingual embedding model",
     )
+
+    @field_validator("gemini_llm_model", mode="before")
+    @classmethod
+    def sanitize_llm_model(cls, v: str) -> str:
+        s = str(v or "").strip().lower()
+        if not s or "2.0-flash" in s:
+            return "gemini-3.5-flash-lite"
+        return str(v).strip()
+
+    @field_validator("gemini_embedding_model", mode="before")
+    @classmethod
+    def sanitize_embedding_model(cls, v: str) -> str:
+        s = str(v or "").strip()
+        if not s or "text-embedding-004" in s:
+            return "gemini-embedding-001"
+        return s.replace("models/", "")
 
     # ------------------------------------------------------------------ #
     # Cohere

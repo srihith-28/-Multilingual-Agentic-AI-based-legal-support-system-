@@ -15,9 +15,9 @@ services:
       - key: GEMINI_API_KEY
         sync: false
       - key: GEMINI_LLM_MODEL
-        value: gemini-2.0-flash
+        value: gemini-3.5-flash-lite
       - key: GEMINI_EMBEDDING_MODEL
-        value: models/text-embedding-004
+        value: gemini-embedding-001
       - key: COHERE_API_KEY
         sync: false
       - key: COHERE_RERANK_MODEL

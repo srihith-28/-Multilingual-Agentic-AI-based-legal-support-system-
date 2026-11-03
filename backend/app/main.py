@@ -16,6 +16,7 @@ from app.core.config import get_settings
 from app.api.routes_chat import router as chat_router
 from app.api.routes_audio import router as audio_router
 from app.api.routes_health import router as health_router
+from app.api.routes_documents import router as documents_router
 
 # ------------------------------------------------------------------ #
 # Logging
@@ -117,10 +118,12 @@ else:
 app.include_router(health_router, prefix="/api", tags=["Health"])
 app.include_router(chat_router,   prefix="/api", tags=["Chat"])
 app.include_router(audio_router,  prefix="/api", tags=["Audio"])
+app.include_router(documents_router, prefix="/api", tags=["Documents"])
 
 app.include_router(health_router, prefix="/api/v1", tags=["Health-v1"])
 app.include_router(chat_router,   prefix="/api/v1", tags=["Chat-v1"])
 app.include_router(audio_router,  prefix="/api/v1", tags=["Audio-v1"])
+app.include_router(documents_router, prefix="/api/v1", tags=["Documents-v1"])
 
 
 # ------------------------------------------------------------------ #

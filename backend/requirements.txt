@@ -46,5 +46,8 @@ python-docx>=1.1.2               # DOCX support
 beautifulsoup4>=4.12.3           # HTML scraping from government portals
 lxml>=5.3.0
 
+# --- Legal Document PDF Generation ---
+reportlab>=4.2.0                 # Bilingual PDF generation (Platypus layout engine)
+
 # --- Async & Performance ---
 anyio>=4.7.0

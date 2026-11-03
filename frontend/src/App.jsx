@@ -3,6 +3,8 @@ import Header from './components/Header';
 import ChatInterface from './components/ChatInterface';
 import CitationDrawer from './components/CitationDrawer';
 import EmergencyModal from './components/EmergencyModal';
+import MaintenanceCalculator from './components/MaintenanceCalculator';
+import DocumentDrafter from './components/DocumentDrafter';
 import { sendChatMessageStreaming, sendChatMessage } from './utils/api';
 
 const WELCOME_MESSAGES = {
@@ -53,6 +55,7 @@ export default function App() {
   const [isEmergencyModalOpen, setIsEmergencyModal] = useState(false);
   const [citations, setCitations]                   = useState([]);
   const [isLoading, setIsLoading]                   = useState(false);
+  const [activeTab, setActiveTab]                   = useState('chat'); // 'chat' | 'calculator' | 'drafter'
 
   const [sessionId] = useState(
     () => 'sess_' + Math.random().toString(36).substring(2, 10)
@@ -227,24 +230,60 @@ export default function App() {
         onOpenEmergency={() => setIsEmergencyModal(true)}
       />
 
-      <main className="main-grid">
-        <ChatInterface
-          messages={messages}
-          onSendMessage={handleSendMessage}
-          isLoading={isLoading}
-          language={language}
-          onSelectCitationMessage={(selectedCitations) => {
-            if (selectedCitations?.length > 0) {
-              setCitations(selectedCitations);
-            }
-          }}
-        />
+      {/* Tab Navigation */}
+      <nav className="tab-nav">
+        <button
+          className={`tab-btn${activeTab === 'chat' ? ' tab-btn--active' : ''}`}
+          onClick={() => setActiveTab('chat')}
+        >
+          💬 Legal AI Chat
+        </button>
+        <button
+          className={`tab-btn${activeTab === 'calculator' ? ' tab-btn--active' : ''}`}
+          onClick={() => setActiveTab('calculator')}
+        >
+          🧮 Maintenance Calculator
+        </button>
+        <button
+          className={`tab-btn${activeTab === 'drafter' ? ' tab-btn--active' : ''}`}
+          onClick={() => setActiveTab('drafter')}
+        >
+          📄 Document Drafter
+        </button>
+      </nav>
 
-        <CitationDrawer
-          citations={citations}
-          onAskAboutSection={(q) => handleSendMessage(q)}
-        />
-      </main>
+      {activeTab === 'chat' && (
+        <main className="main-grid">
+          <ChatInterface
+            messages={messages}
+            onSendMessage={handleSendMessage}
+            isLoading={isLoading}
+            language={language}
+            onSelectCitationMessage={(selectedCitations) => {
+              if (selectedCitations?.length > 0) {
+                setCitations(selectedCitations);
+              }
+            }}
+          />
+
+          <CitationDrawer
+            citations={citations}
+            onAskAboutSection={(q) => handleSendMessage(q)}
+          />
+        </main>
+      )}
+
+      {activeTab === 'calculator' && (
+        <main className="tool-main">
+          <MaintenanceCalculator language={language} />
+        </main>
+      )}
+
+      {activeTab === 'drafter' && (
+        <main className="tool-main">
+          <DocumentDrafter language={language} />
+        </main>
+      )}
 
       <EmergencyModal
         isOpen={isEmergencyModalOpen}

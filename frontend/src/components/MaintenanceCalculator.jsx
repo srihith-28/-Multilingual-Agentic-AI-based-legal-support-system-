@@ -5,7 +5,7 @@
  * Based on Supreme Court guidelines in Rajnesh v. Neha (2020)
  */
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useRef } from 'react';
 import { Calculator, IndianRupee, Info, ChevronDown, ChevronUp } from 'lucide-react';
 
 // ─── Multilingual labels ──────────────────────────────────────────────────────
@@ -198,6 +198,19 @@ export default function MaintenanceCalculator({ language = 'en' }) {
   });
   const [showFactors, setShowFactors] = useState(false);
   const [calculated, setCalculated] = useState(false);
+  const factorsRef = useRef(null);
+
+  const toggleFactors = () => {
+    setShowFactors((prev) => {
+      const next = !prev;
+      if (next) {
+        setTimeout(() => {
+          factorsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }, 100);
+      }
+      return next;
+    });
+  };
 
   const result = useMemo(() => {
     if (!calculated) return null;
@@ -365,11 +378,11 @@ export default function MaintenanceCalculator({ language = 'en' }) {
       ) : null}
 
       {/* Factors Accordion */}
-      <div className="factors-accordion">
+      <div className="factors-accordion" ref={factorsRef}>
         <button
           type="button"
           className="factors-toggle"
-          onClick={() => setShowFactors((s) => !s)}
+          onClick={toggleFactors}
         >
           <Info size={16} />
           {L.factors}
@@ -379,8 +392,8 @@ export default function MaintenanceCalculator({ language = 'en' }) {
           <ul className="factor-list">
             {FACTORS.map((f, i) => (
               <li key={i}>
-                <span className="factor-num">{i + 1}.</span>
-                {f[language] || f.en}
+                <span className="factor-num">{i + 1}</span>
+                <span className="factor-text">{f[language] || f.en}</span>
               </li>
             ))}
           </ul>
@@ -389,3 +402,4 @@ export default function MaintenanceCalculator({ language = 'en' }) {
     </div>
   );
 }
+

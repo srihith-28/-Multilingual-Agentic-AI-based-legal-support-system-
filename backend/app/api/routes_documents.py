@@ -82,3 +82,4 @@ async def draft_document(req: DraftRequest) -> Response:
             "Content-Length": str(len(pdf_bytes)),
         },
     )
+

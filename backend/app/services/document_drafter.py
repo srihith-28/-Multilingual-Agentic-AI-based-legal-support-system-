@@ -559,3 +559,4 @@ def generate_legal_document_pdf(
     pdf_bytes = buf.getvalue()
     logger.info(f"Generated PDF: template={template_type}, lang={lang}, size={len(pdf_bytes)} bytes")
     return pdf_bytes
+

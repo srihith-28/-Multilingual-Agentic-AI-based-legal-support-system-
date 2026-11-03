@@ -9,20 +9,14 @@
 import React, { useState, useMemo } from 'react';
 import {
   ShieldCheck,
-  AlertCircle,
-  FileText,
   Smartphone,
-  CreditCard,
-  HeartPulse,
   Award,
   CheckSquare,
   Square,
-  HelpCircle,
   CheckCircle2,
-  XCircle,
   AlertTriangle,
   FileCheck2,
-  Download
+  ChevronRight
 } from 'lucide-react';
 
 const CASE_TYPES = [
@@ -375,3 +369,4 @@ export default function EvidenceScanner({ language = 'en' }) {
     </div>
   );
 }
+

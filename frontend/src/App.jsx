@@ -5,6 +5,9 @@ import CitationDrawer from './components/CitationDrawer';
 import EmergencyModal from './components/EmergencyModal';
 import MaintenanceCalculator from './components/MaintenanceCalculator';
 import DocumentDrafter from './components/DocumentDrafter';
+import CourtRoadmap from './components/CourtRoadmap';
+import EvidenceScanner from './components/EvidenceScanner';
+import LegalAidLocator from './components/LegalAidLocator';
 import { sendChatMessageStreaming, sendChatMessage } from './utils/api';
 
 const WELCOME_MESSAGES = {
@@ -250,6 +253,24 @@ export default function App() {
         >
           📄 Document Drafter
         </button>
+        <button
+          className={`tab-btn${activeTab === 'roadmap' ? ' tab-btn--active' : ''}`}
+          onClick={() => setActiveTab('roadmap')}
+        >
+          🗺️ Court Roadmap
+        </button>
+        <button
+          className={`tab-btn${activeTab === 'scanner' ? ' tab-btn--active' : ''}`}
+          onClick={() => setActiveTab('scanner')}
+        >
+          🛡️ Evidence Scanner
+        </button>
+        <button
+          className={`tab-btn${activeTab === 'locator' ? ' tab-btn--active' : ''}`}
+          onClick={() => setActiveTab('locator')}
+        >
+          🏛️ Legal Aid Directory
+        </button>
       </nav>
 
       {activeTab === 'chat' && (
@@ -282,6 +303,24 @@ export default function App() {
       {activeTab === 'drafter' && (
         <main className="tool-main">
           <DocumentDrafter language={language} />
+        </main>
+      )}
+
+      {activeTab === 'roadmap' && (
+        <main className="tool-main">
+          <CourtRoadmap language={language} />
+        </main>
+      )}
+
+      {activeTab === 'scanner' && (
+        <main className="tool-main">
+          <EvidenceScanner language={language} />
+        </main>
+      )}
+
+      {activeTab === 'locator' && (
+        <main className="tool-main">
+          <LegalAidLocator language={language} />
         </main>
       )}
 
